@@ -1,0 +1,30 @@
+version: '2'
+services:
+  client:
+    container_name: city-client
+    networks: 
+        - city
+    image: majikandy/city
+    ports: 
+        - 5050:5000
+        - 16179:16178
+        - 39221:39221
+  nako:
+    container_name: city-nako
+    networks: 
+        - city
+    image: majikandy/nako:core
+    command: city
+    ports: 
+        - 9000:9000
+    depends_on:
+        - mongo
+        - client
+  mongo:
+    container_name: city-mongo
+    networks: 
+        - city
+    image: mongo:3.2
+networks:
+    city:
+      driver: bridge
