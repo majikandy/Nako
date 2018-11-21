@@ -12,7 +12,8 @@ RUN mkdir -p /usr/src/app/source /usr/src/app/build
 
 RUN git clone https://github.com/CityChainFoundation/city-chain /usr/src/app/source
 WORKDIR /usr/src/app/source/src
-#RUN git checkout master
+RUN git fetch
+RUN git checkout feature/release-10
 WORKDIR /usr/src/app/source/src/City.Chain
 RUN dotnet build -o /usr/src/app/build
 
@@ -38,7 +39,8 @@ FROM microsoft/dotnet:2.1-sdk AS cleanmachine
 RUN mkdir -p /usr/src/city .nuget/packages
 COPY --from=buildmachine /usr/src/app/build /usr/src/city
 COPY --from=buildmachine /root/.nuget/packages /root/.nuget/packages
-COPY city.conf /root/.city/city.conf
+COPY city.conf /root/city.conf
+COPY city.conf /root/.citychain/city.conf
 WORKDIR /usr/src/city
 
 #ENV ASPNETCORE_URLS=http://+:5000;http://+:39221
