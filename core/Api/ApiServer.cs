@@ -166,6 +166,10 @@ namespace Nako.Api
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Nako API V1");
                 });
+
+                app.UseDefaultFiles();
+                app.UseStaticFiles();
+                app.UseSpa(builder => builder.Options.DefaultPage = "/index.html");
             }
         }
     }
